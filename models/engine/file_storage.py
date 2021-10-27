@@ -1,9 +1,7 @@
 #!/usr/bin/python3
 '''This module defines the class FileStorage'''
 
-from models.base_model import BaseModel
-
-import os
+import models
 import json
 
 
@@ -34,12 +32,11 @@ class FileStorage:
 
     def reload(self):
         '''load objs from json file'''
-        from models import ClassDic
         try:
             with open(self.__file_path, 'r') as jsonTOobjs:
                 all_json = json.load(jsonTOobjs)
                 for key in all_json:
-                    obj = all_json[key]
-                    self.__objects[key] = ClassDic[obj['__class__']](**obj)
+                    self.__objects[key] = getattr(
+                        models, all_json[key]['__class__'])(**all_json[key])
         except:
             pass
