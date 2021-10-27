@@ -1,11 +1,7 @@
 #!/usr/bin/python3
 from models import storage
-from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.user import User
-from models.state import State
-from models.city import City
-from models.amenity import Amenity
 
 all_objs = storage.all()
 print("-- Reloaded objects --")
@@ -22,18 +18,10 @@ my_user.password = "root"
 my_user.save()
 print(my_user)
 
-print("-- Create a new State --")
-my_state = State()
-my_state.name = "Deez Nuts"
-my_state.save()
-print(my_state)
-
-print("-- Create a new City --")
-my_city = City()
-my_city.name = "Tulsa"
-print(my_city)
-
-print("-- Create a new Amenity --")
-my_amenity = Amenity()
-my_amenity.name = "Garglon Bofa"
-print(my_amenity)
+print("-- Create a new User 2 --")
+my_user2 = User()
+my_user2.first_name = "John"
+my_user2.email = "airbnb2@mail.com"
+my_user2.password = "root"
+my_user2.save()
+print(my_user2)

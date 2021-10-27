@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 '''This module defines the class FileStorage'''
 
-from json.encoder import py_encode_basestring
 from models.base_model import BaseModel
 
 import os
@@ -35,11 +34,12 @@ class FileStorage:
 
     def reload(self):
         '''load objs from json file'''
+        from models import ClassDic
         try:
             with open(self.__file_path, 'r') as jsonTOobjs:
                 all_json = json.load(jsonTOobjs)
                 for key in all_json:
-                    thing = BaseModel(**all_json[key])
-                    self.__objects[key] = thing
+                    obj = all_json[key]
+                    self.__objects[key] = ClassDic[obj['__class__']](**obj)
         except:
             pass
