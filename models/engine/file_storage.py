@@ -1,5 +1,8 @@
 #!/usr/bin/python3
-'''This module defines the class FileStorage'''
+'''This module defines the class FileStorage
+It will be used to store our objects into a JSON file
+and load from that file
+'''
 
 import models
 import json
