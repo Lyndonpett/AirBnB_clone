@@ -7,4 +7,7 @@ from models.base_model import BaseModel
 class State(BaseModel):
     '''Defining State inherited from BaseModel'''
 
-    name = ""
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        if not kwargs:
+            self.name = ""

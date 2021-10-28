@@ -10,9 +10,5 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 
-
-ClassDic = {'BaseModel': BaseModel, 'User': User, 'State': State,
-            'City': City, 'Amenity': Amenity, 'Place': Place, 'Review': Review}
-
 storage = FileStorage()
 storage.reload()

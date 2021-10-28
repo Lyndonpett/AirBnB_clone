@@ -7,5 +7,8 @@ from models.base_model import BaseModel
 class City(BaseModel):
     '''Defining City inherited from BaseModel'''
 
-    name = ""
-    state_id = ""
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        if not kwargs:
+            self.name = ""
+            self.state_id = ""

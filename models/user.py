@@ -7,7 +7,7 @@ from models.base_model import BaseModel
 class User(BaseModel):
     '''Defining User, inherited from Basemodel'''
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
         if not kwargs:
             self.email = ""

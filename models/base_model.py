@@ -8,7 +8,7 @@ import models
 class BaseModel():
     '''Base model for future classes'''
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, **kwargs):
         '''init method of BaseModel'''
         if kwargs:
             for key in kwargs:
