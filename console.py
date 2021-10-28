@@ -33,8 +33,7 @@ class HBNBCommand(cmd.Cmd):
         Creates a BaseModel object, Saves it to JSON file, and Prints the id
         '''
         if not args:
-            print('** class name missing **')
-            return
+            return print('** class name missing **')
 
         try:
             thing = getattr(models, args)()
@@ -47,7 +46,6 @@ class HBNBCommand(cmd.Cmd):
         '''show:
         Print the __str__ of an object by class & id
         '''
-        arg_list = args.split(' ')
         if not args:
             return print('** class name missing **')
 
@@ -56,7 +54,7 @@ class HBNBCommand(cmd.Cmd):
         except:
             return print("** class doesn't exist **")
 
-        if len(arg_list) < 2:
+        if len(args.split(' ')) < 2:
             return print('** instance id missing **')
 
         try:
@@ -69,7 +67,6 @@ class HBNBCommand(cmd.Cmd):
         '''destoy:
         Delete an instance of an object by class & id
         '''
-        arg_list = args.split(' ')
         if not args:
             return print('** class name missing **')
 
@@ -78,7 +75,7 @@ class HBNBCommand(cmd.Cmd):
         except:
             return print("** class doesn't exist **")
 
-        if len(arg_list) < 2:
+        if len(args.split(' ')) < 2:
             return print('** instance id missing **')
 
         try:
@@ -87,6 +84,9 @@ class HBNBCommand(cmd.Cmd):
             print('** no instance found **')
 
     def do_all(self, args):
+        '''all:
+        Print a list of all active objects in storage.
+        '''
         if args:
             try:
                 getattr(models, args.split(' ')[0])
@@ -94,6 +94,32 @@ class HBNBCommand(cmd.Cmd):
                 return print("** class doesn't exist **")
 
         print([str(models.storage.all()[key]) for key in models.storage.all()])
+
+    def do_update(self, args):
+        '''update:
+        Update the attribute value of an active object in storage
+        '''
+        if not args:
+            return print('** class name missing **')
+
+        argz = args.split(' ')
+
+        try:
+            getattr(models, argz[0])
+        except:
+            return print("** class doesn't exist **")
+
+        if len(argz) < 2:
+            return print('** instance id missing **')
+
+        try:
+            setattr(
+                models.storage.all()[argz[0] + '.' + argz[1]],
+                argz[2],
+                argz[3]
+            )
+        except:
+            print('** no instance found **')
 
 
 if __name__ == '__main__':
