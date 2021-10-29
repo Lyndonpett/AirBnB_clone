@@ -19,8 +19,10 @@ class TestBase(unittest.TestCase):
     def testKwargs(self):
         '''Tests base created with dict'''
 
-        testDic = {"updated_at": "2021-10-29T23:26:48.287044", "created_at": "2021-10-29T23:26:48.287044",
-                   "id": "5b9de3e3-1c3e-47ee-8ed0-98bb95eaa2a9", "__class__": "BaseModel"}
+        testDic = {"updated_at": "2021-10-29T23:26:48.287044",
+                   "created_at": "2021-10-29T23:26:48.287044",
+                   "id": "5b9de3e3-1c3e-47ee-8ed0-98bb95eaa2a9",
+                   "__class__": "BaseModel"}
         base2 = BaseModel(**testDic)
         self.assertIsInstance(base2, BaseModel)
         self.assertEqual(base2.id, "5b9de3e3-1c3e-47ee-8ed0-98bb95eaa2a9")
@@ -38,8 +40,10 @@ class TestBase(unittest.TestCase):
     def testTo_Dict(self):
         '''Tests base to_dict'''
 
-        testDic = {"updated_at": "2021-10-29T23:26:48.287044", "created_at": "2021-10-29T23:26:48.287044",
-                   "id": "5b9de3e3-1c3e-47ee-8ed0-98bb95eaa2a9", "__class__": "BaseModel"}
+        testDic = {"updated_at": "2021-10-29T23:26:48.287044",
+                   "created_at": "2021-10-29T23:26:48.287044",
+                   "id": "5b9de3e3-1c3e-47ee-8ed0-98bb95eaa2a9",
+                   "__class__": "BaseModel"}
         obj2 = BaseModel(**testDic)
 
         obj = BaseModel(**testDic)
@@ -55,11 +59,14 @@ class TestBase(unittest.TestCase):
     def testSTR(self):
         '''Tests base __str__'''
 
-        testDic = {"updated_at": "2021-10-29T23:26:48.287044", "created_at": "2021-10-29T23:26:48.287044",
-                   "id": "5b9de3e3-1c3e-47ee-8ed0-98bb95eaa2a9", "__class__": "BaseModel"}
+        testDic = {"updated_at": "2021-10-29T23:26:48.287044",
+                   "created_at": "2021-10-29T23:26:48.287044",
+                   "id": "5b9de3e3-1c3e-47ee-8ed0-98bb95eaa2a9",
+                   "__class__": "BaseModel"}
         obj = BaseModel(**testDic)
 
         testStr = obj.__str__()
         self.assertEqual(
-            testStr[:52], "[BaseModel] (5b9de3e3-1c3e-47ee-8ed0-98bb95eaa2a9) {")
+            testStr[:52],
+            "[BaseModel] (5b9de3e3-1c3e-47ee-8ed0-98bb95eaa2a9) {")
         self.assertEqual(testStr[-1:], "}")

@@ -91,7 +91,8 @@ class HBNBCommand(cmd.Cmd):
             try:
                 getattr(models, args.split(' ')[0])
                 print([str(models.storage.all()[key])
-                      for key in models.storage.all() if key.split('.')[0] == args])
+                      for key in models.storage.all()
+                       if key.split('.')[0] == args])
             except Exception:
                 return print("** class doesn't exist **")
         else:
