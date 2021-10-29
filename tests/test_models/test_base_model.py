@@ -13,6 +13,7 @@ class TestBase(unittest.TestCase):
         '''Tests values after creating BaseModel'''
 
         base = BaseModel()
+        self.assertIsInstance(base.id, str)
         base.id = 2
         self.assertIsInstance(base, BaseModel)
         self.assertEqual(2, base.id)
@@ -48,9 +49,6 @@ class TestBase(unittest.TestCase):
         c = BaseModel(id=69, created_at="1000-07-29T12:14:07.132263",
                       updated_at="1020-02-13T07:10:03.134263",
                       __class__="test123")
-        print(c)
-        print(c.to_dict())
-        print(c.__dict__)
         cDict = c.to_dict()
         s = ["{'id': 69, 'created_at': ",
              "'1000-07-29T12:14:07.132263', ",
