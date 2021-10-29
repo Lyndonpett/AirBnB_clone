@@ -57,3 +57,7 @@ class TestFileStorage(unittest.TestCase):
         self.fs.save()
         self.fs.reload()
         self.assertEqual(str(self.fs.all().get("BaseModel.69")), str(a))
+
+
+if __name__ == '__main__':
+    unittest.main()
