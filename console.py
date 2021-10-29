@@ -115,6 +115,11 @@ class HBNBCommand(cmd.Cmd):
         if len(argz) < 2:
             return print('** instance id missing **')
 
+        try:
+            models.storage.all()[argz[0] + '.' + argz[1]]
+        except Exception:
+            return print('** no instance found **')
+
         if len(argz) < 3:
             return print('** attribute name missing **')
 
