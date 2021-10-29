@@ -39,7 +39,7 @@ class HBNBCommand(cmd.Cmd):
             thing = getattr(models, args)()
             models.storage.new(thing)
             print(thing.id)
-        except:
+        except Exception:
             print("** class doesn't exist **")
 
     def do_show(self, args):
@@ -51,7 +51,7 @@ class HBNBCommand(cmd.Cmd):
 
         try:
             getattr(models, args.split(' ')[0])
-        except:
+        except Exception:
             return print("** class doesn't exist **")
 
         if len(args.split(' ')) < 2:
@@ -60,7 +60,7 @@ class HBNBCommand(cmd.Cmd):
         try:
             print(str(
                 models.storage.all()['.'.join(i for i in args.split(' '))]))
-        except:
+        except Exception:
             print('** no instance found **')
 
     def do_destroy(self, args):
@@ -72,7 +72,7 @@ class HBNBCommand(cmd.Cmd):
 
         try:
             getattr(models, args.split(' ')[0])
-        except:
+        except Exception:
             return print("** class doesn't exist **")
 
         if len(args.split(' ')) < 2:
@@ -80,7 +80,7 @@ class HBNBCommand(cmd.Cmd):
 
         try:
             del models.storage.all()['.'.join(i for i in args.split(' '))]
-        except:
+        except Exception:
             print('** no instance found **')
 
     def do_all(self, args):
@@ -90,7 +90,7 @@ class HBNBCommand(cmd.Cmd):
         if args:
             try:
                 getattr(models, args.split(' ')[0])
-            except:
+            except Exception:
                 return print("** class doesn't exist **")
 
         print([str(models.storage.all()[key]) for key in models.storage.all()])
@@ -106,7 +106,7 @@ class HBNBCommand(cmd.Cmd):
 
         try:
             getattr(models, argz[0])
-        except:
+        except Exception:
             return print("** class doesn't exist **")
 
         if len(argz) < 2:
@@ -118,7 +118,7 @@ class HBNBCommand(cmd.Cmd):
                 argz[2],
                 argz[3]
             )
-        except:
+        except Exception:
             print('** no instance found **')
 
 

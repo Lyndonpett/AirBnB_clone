@@ -41,5 +41,5 @@ class FileStorage:
                 for key in all_json:
                     self.__objects[key] = getattr(
                         models, all_json[key]['__class__'])(**all_json[key])
-        except:
+        except Exception:
             pass
