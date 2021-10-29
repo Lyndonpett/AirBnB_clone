@@ -31,7 +31,7 @@ class TestFileStorage(unittest.TestCase):
         self.FS.new(thing)
         self.assertEqual(self.FS.all(), {'BaseModel.420': thing})
 
-    def test_Save(self):
+    def test_save(self):
         '''tests self.save()'''
         thing = BaseModel(id='420', created_at='1999-12-31T11:59:59.999999',
                           updated_at='1999-12-31T11:59:59.999999')
@@ -45,7 +45,7 @@ class TestFileStorage(unittest.TestCase):
                         ' "BaseModel"}}']
         self.assertEqual(ln, "".join(json_str))
 
-    def testReload(self):
+    def test_reload(self):
         '''tests self.reload()'''
         self.FS.reload()
         self.assertEqual(self.FS.all(), {})
