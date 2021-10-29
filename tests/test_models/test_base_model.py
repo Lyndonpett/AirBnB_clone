@@ -13,8 +13,12 @@ class TestBase(unittest.TestCase):
         '''Tests values after creating BaseModel'''
 
         base = BaseModel()
+        base.id = 2
         self.assertIsInstance(base, BaseModel)
-        self.assertIsInstance(base.id, str)
+        self.assertEqual(2, base.id)
+        self.assertIsInstance(base.updated_at, datetime.datetime)
+        self.assertIsInstance(base.created_at, datetime.datetime)
+        self.assertIsInstance(base.to_dict(), dict)
 
     def testKwargs(self):
         '''Tests base created with dict'''
@@ -34,14 +38,19 @@ class TestBase(unittest.TestCase):
         '''Tests base save'''
 
         base3 = BaseModel()
+        oldUpdate = base3.updated_at
         base3.save()
         self.assertNotEqual(base3.created_at, base3.updated_at)
+        self.assertNotEqual(oldUpdate, base3.updated_at)
 
     def testToDict(self):
         '''Tests todict '''
         c = BaseModel(id=69, created_at="1000-07-29T12:14:07.132263",
                       updated_at="1020-02-13T07:10:03.134263",
                       __class__="test123")
+        print(c)
+        print(c.to_dict())
+        print(c.__dict__)
         cDict = c.to_dict()
         s = ["{'id': 69, 'created_at': ",
              "'1000-07-29T12:14:07.132263', ",
@@ -57,7 +66,7 @@ class TestBase(unittest.TestCase):
     def testSTR(self):
         '''Tests base __str__'''
         b = BaseModel()
-        self.assertEqual(b.__str__(), "[BaseModel] ({}) {}".
+        self.assertEqual(str(b), "[BaseModel] ({}) {}".
                          format(b.id, b.__dict__))
 
 
