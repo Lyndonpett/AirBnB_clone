@@ -115,11 +115,18 @@ class HBNBCommand(cmd.Cmd):
         if len(argz) < 2:
             return print('** instance id missing **')
 
+        if len(argz) < 3:
+            return print('** attribute name missing **')
+
+        if len(argz) < 4:
+            return print('** value missing **')
+
         try:
             setattr(
                 models.storage.all()[argz[0] + '.' + argz[1]],
                 argz[2],
-                argz[3].strip('"')
+                type(getattr(getattr(models, argz[0]), argz[2]))(
+                    argz[3].strip('"'))
             )
             models.storage.save()
         except Exception:
