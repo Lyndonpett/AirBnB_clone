@@ -118,7 +118,7 @@ class HBNBCommand(cmd.Cmd):
             setattr(
                 models.storage.all()[argz[0] + '.' + argz[1]],
                 argz[2],
-                argz[3]
+                argz[3].strip('"')
             )
             models.storage.save()
         except Exception:
