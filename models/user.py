@@ -8,6 +8,7 @@ class User(BaseModel):
     '''Defining User, inherited from Basemodel'''
 
     def __init__(self, **kwargs):
+        '''Init for User from BaseModel'''
         super().__init__(**kwargs)
         if not kwargs:
             self.email = ""

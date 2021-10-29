@@ -8,6 +8,7 @@ class Place(BaseModel):
     '''Defining Place inherited from BaseModel'''
 
     def __init__(self, **kwargs):
+        '''Init for Place from BaseModel'''
         super().__init__(**kwargs)
         if not kwargs:
             self.city_id = ""

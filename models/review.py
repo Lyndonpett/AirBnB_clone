@@ -8,6 +8,7 @@ class Review(BaseModel):
     '''Defining Review inherited from BaseModel'''
 
     def __init__(self, **kwargs):
+        '''Init for Review from BaseModel'''
         super().__init__(**kwargs)
         if not kwargs:
             self.place_id = ""
