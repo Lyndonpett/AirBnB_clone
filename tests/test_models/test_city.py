@@ -14,7 +14,7 @@ class testCity(unittest.TestCase):
 
         self.city = City()
 
-    def CityTests(self):
+    def testInit(self):
         '''testing city class'''
 
         self.assertEqual(self.city.name, "")

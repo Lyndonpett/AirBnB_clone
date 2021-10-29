@@ -14,7 +14,7 @@ class testAmenity(unittest.TestCase):
 
         self.amenity = Amenity()
 
-    def AmenityTests(self):
+    def testInit(self):
         '''testing Amenity class'''
 
         self.assertEqual(self.amenity.name, "")

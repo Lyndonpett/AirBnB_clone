@@ -13,7 +13,7 @@ class TestUser(unittest.TestCase):
 
         self.u = User()
 
-    def UserTests(self):
+    def testInit(self):
         self.assertEqual(self.u.email, "")
         self.assertEqual(self.u.password, "")
         self.assertEqual(self.u.first_name, "")

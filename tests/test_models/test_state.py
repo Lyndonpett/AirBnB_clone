@@ -14,7 +14,7 @@ class testState(unittest.TestCase):
 
         self.state = State()
 
-    def StateTests(self):
+    def testInit(self):
         '''testing state class'''
 
         self.assertEqual(self.state.name, "")

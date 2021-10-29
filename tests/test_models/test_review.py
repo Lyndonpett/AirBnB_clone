@@ -14,7 +14,7 @@ class testReview(unittest.TestCase):
 
         self.review = Review()
 
-    def ReviewTests(self):
+    def testInit(self):
         '''testing Review class'''
 
         self.assertEqual(self.review.place_id, "")

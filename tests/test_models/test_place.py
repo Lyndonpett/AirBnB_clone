@@ -14,7 +14,7 @@ class testPlace(unittest.TestCase):
 
         self.place = Place()
 
-    def PlaceTests(self):
+    def testInit(self):
         '''testing place class'''
 
         self.assertEqual(self.place.city_id, "")
