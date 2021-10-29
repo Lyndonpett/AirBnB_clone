@@ -20,6 +20,7 @@ class TestFileStorage(unittest.TestCase):
             os.remove('file.json')
 
     def test_new(self):
+        '''tests self.new()'''
         with self.assertRaises(TypeError):
             self.FS.new()
 
@@ -45,7 +46,7 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(ln, "".join(json_str))
 
     def testReload(self):
-        """tests the reload method"""
+        '''tests self.reload()'''
         self.FS.reload()
         self.assertEqual(self.FS.all(), {})
         thing = BaseModel(id='420', created_at='1999-12-31T11:59:59.999999',
