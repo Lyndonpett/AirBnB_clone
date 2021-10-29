@@ -14,14 +14,12 @@ class HBNBCommand(cmd.Cmd):
         '''quit:
         Exits the application
         '''
-        models.storage.save()
         raise SystemExit
 
     def do_EOF(self, args):
         '''EOF:
         Exits application on End of File
         '''
-        models.storage.save()
         raise SystemExit
 
     def emptyline(self):
@@ -38,7 +36,7 @@ class HBNBCommand(cmd.Cmd):
         try:
             thing = getattr(models, args)()
             models.storage.new(thing)
-            # models.storage.save()
+            models.storage.save()
             print(thing.id)
         except Exception:
             print("** class doesn't exist **")
@@ -81,7 +79,7 @@ class HBNBCommand(cmd.Cmd):
 
         try:
             del models.storage.all()['.'.join(i for i in args.split(' '))]
-            # models.storage.save()
+            models.storage.save()
         except Exception:
             print('** no instance found **')
 
@@ -92,10 +90,13 @@ class HBNBCommand(cmd.Cmd):
         if args:
             try:
                 getattr(models, args.split(' ')[0])
+                print([str(models.storage.all()[key])
+                      for key in models.storage.all() if key.split('.')[0] == args])
             except Exception:
                 return print("** class doesn't exist **")
-
-        print([str(models.storage.all()[key]) for key in models.storage.all()])
+        else:
+            print([str(models.storage.all()[key])
+                  for key in models.storage.all()])
 
     def do_update(self, args):
         '''update:
@@ -120,7 +121,7 @@ class HBNBCommand(cmd.Cmd):
                 argz[2],
                 argz[3].strip('"')
             )
-            # models.storage.save()
+            models.storage.save()
         except Exception:
             print('** no instance found **')
 
