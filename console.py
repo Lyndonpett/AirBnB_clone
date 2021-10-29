@@ -38,6 +38,7 @@ class HBNBCommand(cmd.Cmd):
         try:
             thing = getattr(models, args)()
             models.storage.new(thing)
+            models.storage.save()
             print(thing.id)
         except Exception:
             print("** class doesn't exist **")
@@ -80,6 +81,7 @@ class HBNBCommand(cmd.Cmd):
 
         try:
             del models.storage.all()['.'.join(i for i in args.split(' '))]
+            models.storage.save()
         except Exception:
             print('** no instance found **')
 
@@ -118,6 +120,7 @@ class HBNBCommand(cmd.Cmd):
                 argz[2],
                 argz[3]
             )
+            models.storage.save()
         except Exception:
             print('** no instance found **')
 
