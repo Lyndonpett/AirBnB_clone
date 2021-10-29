@@ -37,24 +37,22 @@ class TestBase(unittest.TestCase):
         base3.save()
         self.assertNotEqual(base3.created_at, base3.updated_at)
 
-    def testTo_Dict(self):
-        '''Tests base to_dict'''
-
-        testDic = {"updated_at": "2021-10-29T23:26:48.287044",
-                   "created_at": "2021-10-29T23:26:48.287044",
-                   "id": "5b9de3e3-1c3e-47ee-8ed0-98bb95eaa2a9",
-                   "__class__": "BaseModel"}
-        obj2 = BaseModel(**testDic)
-
-        obj = BaseModel(**testDic)
-        objDict = obj2.to_dict()
-        self.assertDictEqual(obj2.__dict__, obj.__dict__)
-        self.assertEqual(objDict["id"], "5b9de3e3-1c3e-47ee-8ed0-98bb95eaa2a9")
-        self.assertEqual(objDict["created_at"], "2021-10-29T23:26:48.287044")
-        self.assertEqual(objDict["updated_at"], "2021-10-29T23:26:48.287044")
-        self.assertIsInstance(objDict["id"], str)
-        self.assertIsInstance(objDict["created_at"], str)
-        self.assertIsInstance(objDict["updated_at"], str)
+    def testToDict(self):
+        '''Tests todict '''
+        c = BaseModel(id=69, created_at="1000-07-29T12:14:07.132263",
+                      updated_at="1020-02-13T07:10:03.134263",
+                      __class__="test123")
+        cDict = c.to_dict()
+        s = ["{'id': 69, 'created_at': ",
+             "'1000-07-29T12:14:07.132263', ",
+             "'updated_at': '1020-02-13T07:10:03.134263',",
+             " '__class__': 'BaseModel'}"]
+        stringline = s[0] + s[1] + s[2] + s[3]
+        self.assertEqual(str(cDict), stringline, "dict not match in toDict()")
+        self.assertIsInstance(cDict["updated_at"], str,
+                              "updated_at not ISO string. used in toDict()")
+        self.assertIsInstance(cDict["created_at"], str,
+                              "created_at not ISO string. used in toDict()")
 
     def testSTR(self):
         '''Tests base __str__'''
