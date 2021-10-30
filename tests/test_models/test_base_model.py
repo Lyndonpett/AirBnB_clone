@@ -4,6 +4,7 @@
 import unittest
 import datetime
 from models.base_model import BaseModel
+import json
 
 
 class TestBase(unittest.TestCase):
@@ -66,6 +67,17 @@ class TestBase(unittest.TestCase):
         b = BaseModel()
         self.assertEqual(str(b), "[BaseModel] ({}) {}".
                          format(b.id, b.__dict__))
+
+    def testSave(self):
+        '''another chance for save?'''
+        c = BaseModel(id=69, created_at="1000-07-29T12:14:07.132263",
+                      updated_at="1020-02-13T07:10:03.134263",
+                      __class__="test123")
+        lastUpdate = str(c.updated_at)
+        c.save()
+        self.assertNotEqual(str(c.updated_at),
+                            lastUpdate,
+                            "updated_at did not change when using save()")
 
 
 if __name__ == '__main__':
