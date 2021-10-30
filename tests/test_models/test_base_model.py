@@ -1,91 +1,81 @@
 #!/usr/bin/python3
 '''Base Model Unittests'''
 
+from pyexpat import model
+import models
+from models.base_model import BaseModel
 import unittest
 import datetime
-from models.base_model import BaseModel
 import json
+import os
 
 
 class TestBase(unittest.TestCase):
-    '''Tests for BaseModels class'''
+    '''Tests for BaseModel class'''
 
-    def testBase(self):
-        '''Tests values after creating BaseModel'''
+    # setup testing objects
+    kwargs = {'updated_at': '1999-12-31T11:59:59.999999',
+              'created_at': '1999-12-31T11:59:59.999999',
+              'id': '420',
+              '__class__': 'BaseModel'}
+    base = BaseModel()
+    base2 = BaseModel(**kwargs)
 
-        base = BaseModel()
-        self.assertIsInstance(base.id, str)
-        base.id = 2
-        self.assertIsInstance(base, BaseModel)
-        self.assertEqual(2, base.id)
-        self.assertIsInstance(base.updated_at, datetime.datetime)
-        self.assertIsInstance(base.created_at, datetime.datetime)
-        self.assertIsInstance(base.to_dict(), dict)
+    def setUp(self):
+        '''clear models.storage for each test'''
 
-    def testKwargs(self):
-        '''Tests base created with dict'''
+        if os.path.exists('file.json'):
+            os.remove('file.json')
+        junk = [obj for obj in models.storage.all()]
+        for obj in junk:
+            del models.storage.all()[obj]
 
-        testDic = {"updated_at": "2021-10-29T23:26:48.287044",
-                   "created_at": "2021-10-29T23:26:48.287044",
-                   "id": "5b9de3e3-1c3e-47ee-8ed0-98bb95eaa2a9",
-                   "__class__": "BaseModel"}
-        base2 = BaseModel(**testDic)
-        self.assertIsInstance(base2, BaseModel)
-        self.assertEqual(base2.id, "5b9de3e3-1c3e-47ee-8ed0-98bb95eaa2a9")
-        self.assertIsInstance(base2.updated_at, datetime.datetime)
-        self.assertIsInstance(base2.created_at, datetime.datetime)
-        self.assertIsInstance(base2.to_dict(), dict)
+    def test_init(self):
+        '''Create BaseModel and confirm value types'''
 
-    def testBaseSave(self):
-        '''Tests base save'''
+        self.assertIsInstance(self.base, BaseModel)
+        self.assertIsInstance(self.base.id, str)
+        self.base.id = 2
+        self.assertEqual(2, self.base.id)
+        self.assertIsInstance(self.base.updated_at, datetime.datetime)
+        self.assertIsInstance(self.base.created_at, datetime.datetime)
+        self.assertIsInstance(self.base.to_dict(), dict)
 
-        base3 = BaseModel()
-        oldUpdate = base3.updated_at
-        base3.save()
-        self.assertNotEqual(base3.created_at, base3.updated_at)
-        self.assertNotEqual(oldUpdate, base3.updated_at)
+    def test_init_kwargs(self):
+        '''Create BaseModel using **kwargs'''
 
-    def testToDict(self):
-        '''Tests todict '''
-        c = BaseModel(id=69, created_at="1000-07-29T12:14:07.132263",
-                      updated_at="1020-02-13T07:10:03.134263",
-                      __class__="test123")
-        cDict = c.to_dict()
-        s = ["{'id': 69, 'created_at': ",
-             "'1000-07-29T12:14:07.132263', ",
-             "'updated_at': '1020-02-13T07:10:03.134263',",
-             " '__class__': 'BaseModel'}"]
-        stringline = s[0] + s[1] + s[2] + s[3]
-        self.assertEqual(str(cDict), stringline, "dict not match in toDict()")
-        self.assertIsInstance(cDict["updated_at"], str,
-                              "updated_at not ISO string. used in toDict()")
-        self.assertIsInstance(cDict["created_at"], str,
-                              "created_at not ISO string. used in toDict()")
+        self.assertIsInstance(self.base2, BaseModel)
+        self.assertEqual(self.base2.id, "420")
+        self.assertIsInstance(self.base2.updated_at, datetime.datetime)
+        self.assertIsInstance(self.base2.created_at, datetime.datetime)
+        self.assertIsInstance(self.base2.to_dict(), dict)
+        self.assertDictEqual(self.base2.to_dict(), self.kwargs)
 
-    def testSTR(self):
-        '''Tests base __str__'''
-        b = BaseModel()
-        self.assertEqual(str(b), "[BaseModel] ({}) {}".
-                         format(b.id, b.__dict__))
+    def test__str__(self):
+        '''Confirm BaseModel.__str__ returns correctly'''
 
-    def testSave(self):
-        '''another chance for save?'''
-        c = BaseModel(id=69, created_at="1000-07-29T12:14:07.132263",
-                      updated_at="1020-02-13T07:10:03.134263",
-                      __class__="test123")
-        lastUpdate = str(c.updated_at)
-        c.save()
-        self.assertNotEqual(str(c.updated_at),
-                            lastUpdate,
-                            "updated_at did not change when using save()")
+        self.assertEqual(str(self.base), self.base.__str__())
+        self.assertEqual(str(self.base), "[BaseModel] ({}) {}".
+                         format(self.base.id, self.base.__dict__))
+        self.assertEqual(str(self.base2), "[BaseModel] ({}) {}".
+                         format(self.base2.id, self.base2.__dict__))
 
-    def testpassClass(self):
-        '''documentation'''
-        c = BaseModel(id=69, created_at="1000-07-29T12:14:07.132263",
-                      updated_at="1020-02-13T07:10:03.134263",
-                      __class__="test123")
-        self.assertEqual(c.__class__, BaseModel,
-                         "class is assigned as attribute in __init__")
+    def test_to_dict(self):
+        '''Confirm the BaseModel.to_dict() returns correctly'''
+
+        base3 = BaseModel(**self.kwargs)
+        self.assertDictEqual(self.kwargs, base3.to_dict())
+
+    def test_save(self):
+        '''Run BaseModel.save() and confirm file contents'''
+
+        oldUpdate = self.base2.updated_at
+        self.base2.save()
+        self.assertNotEqual(self.base2.created_at, self.base2.updated_at)
+        self.assertNotEqual(oldUpdate, self.base2.updated_at)
+        with open('file.json', 'r') as file:
+            self.assertDictEqual(
+                json.load(file)['BaseModel.420'], self.base2.to_dict())
 
 
 if __name__ == '__main__':
