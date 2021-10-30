@@ -44,3 +44,10 @@ class FileStorage:
                         models, all_json[key]['__class__'])(**all_json[key])
         except Exception:
             pass
+
+    def delete(self, args):
+        '''delete method handled by FileStorage'''
+        try:
+            del self.all()[args]
+        except Exception as e:
+            raise e

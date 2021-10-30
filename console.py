@@ -78,7 +78,8 @@ class HBNBCommand(cmd.Cmd):
             return print('** instance id missing **')
 
         try:
-            del models.storage.all()['.'.join(i for i in args.split(' '))]
+            # del models.storage.all()['.'.join(i for i in args.split(' '))]
+            models.storage.delete('.'.join(i for i in args.split(' ')))
             models.storage.save()
         except Exception:
             print('** no instance found **')

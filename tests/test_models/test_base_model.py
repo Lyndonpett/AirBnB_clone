@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 '''Base Model Unittests'''
 
-from pyexpat import model
 import models
 from models.base_model import BaseModel
 import unittest
@@ -23,7 +22,6 @@ class TestBase(unittest.TestCase):
 
     def setUp(self):
         '''clear models.storage for each test'''
-
         if os.path.exists('file.json'):
             os.remove('file.json')
         junk = [obj for obj in models.storage.all()]
@@ -32,7 +30,6 @@ class TestBase(unittest.TestCase):
 
     def test_init(self):
         '''Create BaseModel and confirm value types'''
-
         self.assertIsInstance(self.base, BaseModel)
         self.assertIsInstance(self.base.id, str)
         self.base.id = 2
@@ -43,7 +40,6 @@ class TestBase(unittest.TestCase):
 
     def test_init_kwargs(self):
         '''Create BaseModel using **kwargs'''
-
         self.assertIsInstance(self.base2, BaseModel)
         self.assertEqual(self.base2.id, "420")
         self.assertIsInstance(self.base2.updated_at, datetime.datetime)
@@ -53,7 +49,6 @@ class TestBase(unittest.TestCase):
 
     def test__str__(self):
         '''Confirm BaseModel.__str__ returns correctly'''
-
         self.assertEqual(str(self.base), self.base.__str__())
         self.assertEqual(str(self.base), "[BaseModel] ({}) {}".
                          format(self.base.id, self.base.__dict__))
@@ -62,13 +57,11 @@ class TestBase(unittest.TestCase):
 
     def test_to_dict(self):
         '''Confirm the BaseModel.to_dict() returns correctly'''
-
         base3 = BaseModel(**self.kwargs)
         self.assertDictEqual(self.kwargs, base3.to_dict())
 
     def test_save(self):
         '''Run BaseModel.save() and confirm file contents'''
-
         oldUpdate = self.base2.updated_at
         self.base2.save()
         self.assertNotEqual(self.base2.created_at, self.base2.updated_at)
