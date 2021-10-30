@@ -79,6 +79,14 @@ class TestBase(unittest.TestCase):
                             lastUpdate,
                             "updated_at did not change when using save()")
 
+    def testpassClass(self):
+        '''documentation'''
+        c = BaseModel(id=69, created_at="1000-07-29T12:14:07.132263",
+                      updated_at="1020-02-13T07:10:03.134263",
+                      __class__="test123")
+        self.assertEqual(c.__class__, BaseModel,
+                         "class is assigned as attribute in __init__")
+
 
 if __name__ == '__main__':
     unittest.main()
