@@ -1,62 +1,66 @@
-#!/usr/bin/python3
-""""Tests the file_storage module"""
+#!/usr/bin/pyhton3
+"""Unittests for class FileStorage"""
+import inspect
 import unittest
-from models.engine.file_storage import FileStorage
+from datetime import datetime
 from models.base_model import BaseModel
+from models.engine.file_storage import FileStorage
+from models import storage
+import os
+import json
 
 
 class TestFileStorage(unittest.TestCase):
-    """Class tests file_storage class"""
+    """tests for file storage"""
 
-    def setUp(self):
-        """setup before each test"""
-        self.fs = FileStorage()
+    @classmethod
+    def setUpClass(cls):
+        """test for class"""
+        cls.f = inspect.getmembers(FileStorage, inspect.isfunction)
 
-    def tearDown(self):
-        """clean up after each test"""
-        with open("file.json", "w") as f:
-            blankDict = {}
-            f.write("{}".format(blankDict))
+    def test_save(self):
+        """test for save"""
+        f = FileStorage()
+        if os.path.exists(f._FileStorage__file_path):
+            os.remove(f._FileStorage__file_path)
+        b = BaseModel()
+        b.save()
+        with open('file.json') as jf:
+            tmp = json.load(jf)
+        self.assertTrue(type(tmp) is dict)
 
-    def testAll(self):
-        """Test the all method"""
-        self.assertEqual(self.fs.all(), {})
-        a = BaseModel(id=69, created_at="1000-07-29T12:14:07.132263",
-                      updated_at="1020-02-13T07:10:03.134263")
-        self.fs.new(a)
-        self.assertEqual(self.fs.all(), {"BaseModel.69": a})
+    def test_all(self):
+        """test for all"""
+        type_to_test = storage.all()
+        self.assertIsNotNone(type_to_test)
+        self.assertIsInstance(storage.all(), dict)
 
-    def testNew(self):
-        """test the new method"""
-        with self.assertRaises(TypeError):
-            self.fs.new()
+    def test_new(self):
+        """test for new"""
+        f = FileStorage()
+        tmp = f.all().copy()
+        BaseModel()
+        self.assertFalse(tmp == f.all())
 
-    def testSave(self):
-        """tests the save method"""
-        # file created
-        a = BaseModel(id=69, created_at="1000-07-29T12:14:07.132263",
-                      updated_at="1020-02-13T07:10:03.134263")
-        self.fs.new(a)
-        self.fs.save()
-        with open("file.json") as f:
-            line = f.readline()
-            string = ['{"BaseModel.69": {"id": 69, "created_at"',
-                      ': "1000-07-29T12:14:07.132263", "updated_at": ',
-                      '"1020-02-13T07:10:03.134263",',
-                      ' "__class__": "BaseModel"}}']
-            fullstr = string[0] + string[1] + string[2] + string[3]
-            self.assertEqual(line, fullstr)
+    def test_reload(self):
+        """test for reload"""
+        BaseModel()
+        obj = storage.all()
+        storage.reload()
+        obj_reloaded = storage.all()
+        self.assertEqual(obj, obj_reloaded)
 
-    def testReload(self):
-        """tests the reload method"""
-        self.fs.reload()
-        self.assertEqual(self.fs.all(), {})
-        a = BaseModel(id=69, created_at="1000-07-29T12:14:07.132263",
-                      updated_at="1020-02-13T07:10:03.134263")
-        self.fs.new(a)
-        self.fs.save()
-        self.fs.reload()
-        self.assertEqual(str(self.fs.all().get("BaseModel.69")), str(a))
+    def test_reload2(self):
+        """test for reload"""
+        f = FileStorage()
+        b = BaseModel()
+        b.save()
+        f.reload()
+        test_reload = f.all().copy()
+        b.my_num = 32
+        self.assertEqual(b.my_num, 32)
+        f.reload()
+        self.assertNotEqual(f.all(), test_reload)
 
 
 if __name__ == '__main__':
