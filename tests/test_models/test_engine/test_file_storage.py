@@ -38,9 +38,8 @@ class TestFileStorage(unittest.TestCase):
     def test_new(self):
         """test for new"""
         f = FileStorage()
-        tmp = f.all().copy()
-        BaseModel()
-        self.assertFalse(tmp == f.all())
+        with self.assertRaises(TypeError):
+            f.new()
 
     def test_reload(self):
         """test for reload"""
