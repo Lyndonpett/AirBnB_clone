@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 '''This module is defining class BaseModel'''
+
 import uuid
 from datetime import datetime
 import models
