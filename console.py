@@ -140,8 +140,12 @@ class HBNBCommand(cmd.Cmd):
 
     def default(self, line):
         '''run class based commands as input check'''
-        cmd_list = ('all()', 'count()', 'show("<id>")')
-        cmd_regex = ('all\(\)', 'count\(\)', 'show\([\"\'][\w\d-]+[\"\']\)')
+        cmd_list = 'all(),  count(),  show("<id>"),  destroy("<id>")'
+        cmd_regex = ('all\(\)',
+                     'count\(\)',
+                     'show\([\"\'][\w\d-]+[\"\']\)',
+                     'destroy\([\"\'][\w\d-]+[\"\']\)'
+                     )
 
         ln_val = line.split('.')
 
@@ -159,8 +163,12 @@ class HBNBCommand(cmd.Cmd):
                     elif i == 2:
                         self.do_show(ln_val[0] + ' ' + ln_val[1][6:-2])
                         break
-            if i == 2 and not match:
-                print('** correct use is <class>.{} **'.format(cmd_list))
+                    elif i == 3:
+                        self.do_destroy(ln_val[0] + ' ' + ln_val[1][9:-2])
+                        break
+            if i == 3 and not match:
+                print('** correct use is <class>.<command> **')
+                print('** where command = {} **'.format(cmd_list))
 
 
 if __name__ == '__main__':
