@@ -24,9 +24,10 @@ class TestBase(unittest.TestCase):
         '''clear models.storage for each test'''
         if os.path.exists('file.json'):
             os.remove('file.json')
+        # can't change the size of a dictionary while iterating through it
         junk = [obj for obj in models.storage.all()]
-        for obj in junk:
-            del models.storage.all()[obj]
+        for key in junk:
+            models.storage.delete(key)
 
     def test_init(self):
         '''Create BaseModel and confirm value types'''
@@ -68,7 +69,7 @@ class TestBase(unittest.TestCase):
         self.assertNotEqual(oldUpdate, self.base2.updated_at)
         with open('file.json', 'r') as file:
             self.assertDictEqual(
-                json.load(file)['BaseModel.420'], self.base2.to_dict())
+                json.load(file), {'BaseModel.420': self.base2.to_dict()})
 
 
 if __name__ == '__main__':
