@@ -1,12 +1,23 @@
 #!/usr/bin/python3
-"""Test the console module"""
+'''Pycodestyle Unittests'''
 import unittest
 import pycodestyle
 import os
 
 
 class TestAll(unittest.TestCase):
-    """Tests over-arching things"""
+    '''Tests over-arching things'''
+
+    files = ('models/engine/file_storage.py',
+             'models/amenity.py',
+             'models/base_model.py',
+             'models/city.py',
+             'models/place.py',
+             'models/review.py',
+             'models/state.py',
+             'models/user.py',
+             'console.py'
+             )
 
     def setUp(self):
         """sets up the class"""

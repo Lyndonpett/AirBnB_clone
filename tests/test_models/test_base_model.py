@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-'''Base Model Unittests'''
+'''BaseModel Unittests'''
 
 import models
 from models.base_model import BaseModel
