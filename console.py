@@ -2,7 +2,7 @@
 '''Console module'''
 import cmd
 import models
-import readline
+import re
 
 
 class HBNBCommand(cmd.Cmd):
@@ -137,6 +137,30 @@ class HBNBCommand(cmd.Cmd):
             models.storage.save()
         except Exception:
             print('** no instance found **')
+
+    def default(self, line):
+        '''run class based commands as input check'''
+        cmd_list = ('all()', 'count()', 'show("<id>")')
+        cmd_regex = ('all\(\)', 'count\(\)', 'show\([\"\'][\w\d-]+[\"\']\)')
+
+        ln_val = line.split('.')
+
+        if len(ln_val) == 2:
+            for i in range(len(cmd_regex)):
+                match = re.search(cmd_regex[i], line.split('.')[1])
+                if match:
+                    if i == 0:
+                        self.do_all(line.split('.')[0])
+                        break
+                    elif i == 1:
+                        print(len([key for key in models.storage.all()
+                              if key.split('.')[0] == ln_val[0]]))
+                        break
+                    elif i == 2:
+                        self.do_show(ln_val[0] + ' ' + ln_val[1][6:-2])
+                        break
+            if i == 2 and not match:
+                print('** correct use is <class>.{} **'.format(cmd_list))
 
 
 if __name__ == '__main__':
