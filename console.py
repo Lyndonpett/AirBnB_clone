@@ -3,6 +3,7 @@
 import cmd
 import models
 import re
+import json
 
 
 class HBNBCommand(cmd.Cmd):
@@ -100,7 +101,7 @@ class HBNBCommand(cmd.Cmd):
             print([str(models.storage.all()[key])
                   for key in models.storage.all()])
 
-    def do_update(self, args):
+    def do_update(self, args, **kwargs):
         '''update:
         Update the attribute value of an active object in storage
         '''
@@ -122,21 +123,32 @@ class HBNBCommand(cmd.Cmd):
         except Exception:
             return print('** no instance found **')
 
-        if len(argz) < 3:
+        if len(argz) < 3 and not kwargs:
             return print('** attribute name missing **')
 
-        if len(argz) < 4:
+        if len(argz) < 4 and not kwargs:
             return print('** value missing **')
 
-        try:
-            setattr(
-                models.storage.all()[argz[0] + '.' + argz[1]],
-                argz[2],
-                argz[3].strip('"')
-            )
-            models.storage.save()
-        except Exception:
-            print('** no instance found **')
+        if args and not kwargs:
+            try:
+                setattr(
+                    models.storage.all()[argz[0] + '.' + argz[1]],
+                    argz[2],
+                    argz[3].strip('\'"')
+                )
+                models.storage.save()
+            except Exception:
+                print('** no instance found **')
+        if kwargs:
+            for key in kwargs:
+                try:
+                    setattr(
+                        models.storage.all()[argz[0] + '.' + argz[1]],
+                        key,
+                        kwargs[key]
+                    )
+                except Exception:
+                    print('** no instance found **')
 
     def default(self, line):
         '''run class based commands as input check'''
@@ -144,17 +156,20 @@ class HBNBCommand(cmd.Cmd):
         cmd_regex = ('all\(\)',
                      'count\(\)',
                      'show\([\"\'][\w\d-]+[\"\']\)',
-                     'destroy\([\"\'][\w\d-]+[\"\']\)'
+                     'destroy\([\"\'][\w\d-]+[\"\']\)',
+                     'update\(\"?([\w\d-]+)\"?, \"?([\w\d-]+)\"?, \
+\"?([\w\d@\.-]+)\"?\)',
+                     'update\([\'\"]?([\w\d-]+)[\'\"]?, (\{.+\})'
                      )
 
         ln_val = line.split('.')
 
         if len(ln_val) == 2:
             for i in range(len(cmd_regex)):
-                match = re.search(cmd_regex[i], line.split('.')[1])
+                match = re.search(cmd_regex[i], ln_val[1])
                 if match:
                     if i == 0:
-                        self.do_all(line.split('.')[0])
+                        self.do_all(ln_val[0])
                         break
                     elif i == 1:
                         print(len([key for key in models.storage.all()
@@ -166,7 +181,16 @@ class HBNBCommand(cmd.Cmd):
                     elif i == 3:
                         self.do_destroy(ln_val[0] + ' ' + ln_val[1][9:-2])
                         break
-            if i == 3 and not match:
+                    elif i == 4:
+                        print(ln_val[0] + ' ' + ' '.join(match.groups()))
+                        self.do_update(ln_val[0] + ' ' +
+                                       ' '.join(match.groups()))
+                    elif i == 5:
+                        self.do_update(
+                            ln_val[0] + ' ' + match.group(1),
+                            **json.loads(match.group(2).replace("'", '"'))
+                        )
+            if i == 5 and not match:
                 print('** correct use is <class>.<command> **')
                 print('** where command = {} **'.format(cmd_list))
 
