@@ -157,16 +157,16 @@ class HBNBCommand(cmd.Cmd):
                      r'count\(\)',
                      r'show\([\"\'][\w\d-]+[\"\']\)',
                      r'destroy\([\"\'][\w\d-]+[\"\']\)',
-                     r'update\(\"?([\w\d-]+)\"?, \"?([\w\d-]+)\"?, \
-\"?([\w\d@\.-]+)\"?\)',
+                     r'update\(\"?([\w\d-]+)\"?, \"?([\w\d-]+)\"?, '
+                     r'\"?([\w\d@\.-]+)\"?\)',
                      r'update\([\'\"]?([\w\d-]+)[\'\"]?, (\{.+\})'
                      )
 
         ln_val = line.split('.')
 
-        if len(ln_val) == 2:
+        if len(ln_val) == 2 or ln_val[1][:6] == 'update':
             for i in range(len(cmd_regex)):
-                match = re.search(cmd_regex[i], ln_val[1])
+                match = re.search(cmd_regex[i], line)
                 if match:
                     if i == 0:
                         self.do_all(ln_val[0])
@@ -182,9 +182,9 @@ class HBNBCommand(cmd.Cmd):
                         self.do_destroy(ln_val[0] + ' ' + ln_val[1][9:-2])
                         break
                     elif i == 4:
-                        print(ln_val[0] + ' ' + ' '.join(match.groups()))
                         self.do_update(ln_val[0] + ' ' +
                                        ' '.join(match.groups()))
+                        break
                     elif i == 5:
                         self.do_update(
                             ln_val[0] + ' ' + match.group(1),
