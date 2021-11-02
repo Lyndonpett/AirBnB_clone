@@ -152,14 +152,14 @@ class HBNBCommand(cmd.Cmd):
 
     def default(self, line):
         '''run class based commands as input check'''
-        cmd_list = 'all(),  count(),  show("<id>"),  destroy("<id>")'
-        cmd_regex = ('all\(\)',
-                     'count\(\)',
-                     'show\([\"\'][\w\d-]+[\"\']\)',
-                     'destroy\([\"\'][\w\d-]+[\"\']\)',
-                     'update\(\"?([\w\d-]+)\"?, \"?([\w\d-]+)\"?, \
+        cmd_list = 'all(),  count(),  show("<id>"),  destroy("<id>"), update()'
+        cmd_regex = (r'all\(\)',
+                     r'count\(\)',
+                     r'show\([\"\'][\w\d-]+[\"\']\)',
+                     r'destroy\([\"\'][\w\d-]+[\"\']\)',
+                     r'update\(\"?([\w\d-]+)\"?, \"?([\w\d-]+)\"?, \
 \"?([\w\d@\.-]+)\"?\)',
-                     'update\([\'\"]?([\w\d-]+)[\'\"]?, (\{.+\})'
+                     r'update\([\'\"]?([\w\d-]+)[\'\"]?, (\{.+\})'
                      )
 
         ln_val = line.split('.')
