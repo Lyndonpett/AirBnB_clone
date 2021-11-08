@@ -164,7 +164,8 @@ class HBNBCommand(cmd.Cmd):
 
         ln_val = line.split('.')
 
-        if len(ln_val) == 2 or ln_val[1][:6] == 'update':
+        try:
+            len(ln_val) == 2 or ln_val[1][:6] == 'update'
             for i in range(len(cmd_regex)):
                 match = re.search(cmd_regex[i], line)
                 if match:
@@ -193,6 +194,8 @@ class HBNBCommand(cmd.Cmd):
             if i == 5 and not match:
                 print('** correct use is <class>.<command> **')
                 print('** where command = {} **'.format(cmd_list))
+        except Exception:
+            pass
 
 
 if __name__ == '__main__':
