@@ -41,6 +41,13 @@
     border: 1px solid #DDDDDD;
     border-radius: 4px;
     padding: 20px 0px 20px 25px;
+    position: relative;
+    z-index: 1;
+}
+
+.popover h2 {
+    margin: 0px;
+    padding-bottom: 5px;
 }
 
 .locations:hover .popover {
