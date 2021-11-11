@@ -129,6 +129,7 @@ class HBNBCommand(cmd.Cmd):
         if len(argz) < 4 and not kwargs:
             return print('** value missing **')
 
+        # seems like it should always update the updated_at time
         if args and not kwargs:
             try:
                 setattr(
@@ -162,9 +163,9 @@ class HBNBCommand(cmd.Cmd):
                      r'update\([\'\"]?([\w\d-]+)[\'\"]?, (\{.+\})'
                      )
 
-        ln_val = line.split('.')
+        ln_val = line.split('.', 1)
 
-        if len(ln_val) == 2 or ln_val[1][:6] == 'update':
+        if len(ln_val) == 2:
             for i in range(len(cmd_regex)):
                 match = re.search(cmd_regex[i], line)
                 if match:
