@@ -5,11 +5,6 @@ body {
     font: 14px "Circular", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-.container {
-    max-width: 1000px;
-    margin: 30px auto 30px auto;
-}
-
 button {
     font: 18px;
     background-color: #FF5A5F;
@@ -24,4 +19,20 @@ button {
 button:hover {
     opacity: 0.9;
     cursor: pointer;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 30px auto 30px auto;
+}
+
+h2 {
+    margin: 0px;
+    padding-bottom: 5px;
+}
+
+ul {
+    list-style: none;
+    line-height: 18px;
+    padding-left: 15px;
 }
