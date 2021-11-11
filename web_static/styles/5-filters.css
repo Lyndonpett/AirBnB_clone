@@ -11,18 +11,24 @@
 .filters h3 {
     font-weight: 600;
     margin-bottom: 2px;
+    padding-left: 30px;
 }
 
 .filters h4 {
     font-weight: 400;
     font-size: 14px;
     margin-top: 1px;
+    margin-bottom: 17px;
+    padding-left: 30px;
 }
 
 #label {
     height: 100%;
     width: 25%;
-    margin-left: 30px;
+}
+
+#label2 {
+    margin-top: 10px;
 }
 
 .locations {
