@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="images/icon.png" />
+    <title>AirBnB</title>
+    <link rel="stylesheet" href="styles/4-common.css">
+    <link rel="stylesheet" href="styles/3-header.css">
+    <link rel="stylesheet" href="styles/3-footer.css">
+    <link rel="stylesheet" href="styles/6-filters.css">
+    <link rel="stylesheet" href="styles/100-places.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo"></div>
+    </header>
+    <div class="container">
+        <section class="filters">
+            <div class="locations" id="label">
+                <h3>State</h3>
+                <h4>Arizona, California...</h4>
+                <ul class="popover">
+                    <li>
+                        <h2>Arizona:</h2>
+                        <ul>
+                            <li>Phoenix</li>
+                            <li>Tucson</li>
+                        </ul>
+                    </li>
+                    <li id="label2">
+                        <h2>California:</h2>
+                        <ul>
+                            <li>San Francisco</li>
+                            <li>Berkeley</li>
+                            <li>Los Angeles</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="amenities" id="label">
+                <h3>Amenities</h3>
+                <h4>Internet, Kitchen...</h4>
+                <ul class="popover">
+                    <li>Blackout Curtains</li>
+                    <li>Internet</li>
+                    <li>Jacuzzi</li>
+                    <li>Kitchen</li>
+                </ul>
+            </div>
+            <button>Search</button>
+        </section>
+        <section class="places">
+            <h1>Places</h1>
+            <article>
+                <h2>PB Mansion</h2>
+                <div class="price_by_night">$22</div>
+                <div class="information">
+                    <div class="max_guest">
+                        <div class="icon_group"></div>
+                        500 Guests
+                    </div>
+                    <div class="number_rooms">
+                        <div class="icon_bed"></div>
+                        50 Bedrooms
+                    </div>
+                    <div class="number_bathrooms">
+                        <div class="icon_bath"></div>
+                        30 Bathrooms
+                    </div>
+                </div>
+                <div class="user"><b>Owner</b>: Hugh Hefner</div>
+                <div class="description">Super awesome mansion with lots of beautiful women, pool with grotto, sauna,
+                    bathhouse.
+                </div>
+                <div class="amenities">
+                    <h2 id="label3">Amenities</h2>
+                    <ul>
+                        <li>
+                            <div class="icon_tv"></div>
+                            TV
+                        </li>
+                        <li>
+                            <div class="icon_wifi"></div>
+                            WiFi
+                        </li>
+                        <li>
+                            <div class="icon_pets"></div>
+                            Pet Friendly
+                        </li>
+                    </ul>
+                </div>
+                <div class="reviews">
+                    <h2 id="label3">1 Review</h2>
+                    <ul>
+                        <li>
+                            <h3>From Alfred Pennyworth the 12th of November 2021</h3>
+                            <p>I like turtles</p>
+                        </li>
+                    </ul>
+                </div>
+            </article>
+            <article>
+                <h2>Stark Tower</h2>
+                <div class="price_by_night">$99</div>
+                <div class="information">
+                    <div class="max_guest">
+                        <div class="icon_group"></div>
+                        2000 Guests
+                    </div>
+                    <div class="number_rooms">
+                        <div class="icon_bed"></div>
+                        20 Bedrooms
+                    </div>
+                    <div class="number_bathrooms">
+                        <div class="icon_bath"></div>
+                        200 Bathrooms
+                    </div>
+                </div>
+                <div class="user"><b>Owner</b>: Tony Stark</div>
+                <div class="description">Stark coorporate office and sometimes home to the worlds heroes, the Avengers!
+                </div>
+                <div class="amenities">
+                    <h2 id="label3">Amenities</h2>
+                    <ul>
+                        <li>
+                            <div class="icon_tv"></div>
+                            TV
+                        </li>
+                        <li>
+                            <div class="icon_wifi"></div>
+                            WiFi
+                        </li>
+                    </ul>
+                </div>
+                <div class="reviews">
+                    <h2 id="label3">1 Review</h2>
+                    <ul>
+                        <li>
+                            <h3>From Alfred Pennyworth the 12th of November 2021</h3>
+                            <p>I like turtles</p>
+                        </li>
+                    </ul>
+                </div>
+            </article>
+            <article>
+                <h2>Batcave</h2>
+                <div class="price_by_night">$Un</div>
+                <div class="information">
+                    <div class="max_guest">
+                        <div class="icon_group"></div>
+                        2 Guests
+                    </div>
+                    <div class="number_rooms">
+                        <div class="icon_bed"></div>
+                        15 Bedrooms
+                    </div>
+                    <div class="number_bathrooms">
+                        <div class="icon_bath"></div>
+                        8 Bathrooms
+                    </div>
+                </div>
+                <div class="user"><b>Owner</b>: Batman</div>
+                <div class="description">It's dark, and we don't actually know where it is, or how to rent it, it's just
+                    cool!
+                </div>
+                <div class="amenities">
+                    <h2 id="label3">Amenities</h2>
+                    <ul>
+                        <li>
+                            ??&nbsp;&nbsp;Unknown
+                        </li>
+                    </ul>
+                </div>
+                <div class="reviews">
+                    <h2 id="label3">2 Reviews</h2>
+                    <ul>
+                        <li>
+                            <h3>From Alfred Pennyworth the 12th of November 2021</h3>
+                            <p>I like turtles.</p>
+                        </li>
+                        <li>
+                            <h3>From Dic Grayson the 12th of November 2021</h3>
+                            <p>Home sweet home.</p>
+                        </li>
+                    </ul>
+                </div>
+            </article>
+        </section>
+    </div>
+    <footer>Best School</footer>
+</body>
+
+</html>
