@@ -6,7 +6,7 @@ import os
 
 
 class TestPycodestyle(unittest.TestCase):
-    '''Tests over-arching things'''
+    '''Tests files for requirements'''
 
     files = ('models/engine/file_storage.py',
              'models/amenity.py',
