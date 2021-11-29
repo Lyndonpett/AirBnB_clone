@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 '''Console Unittests'''
 import unittest
+from unittest.mock import patch
 import console
 import os
 import types
@@ -12,8 +13,10 @@ from io import StringIO
 class TestColsole(unittest.TestCase):
     '''Test console methods'''
 
-    con = console.HBNBCommand()
     true_out = sys.stdout
+    con_out = StringIO()
+    sys.stdout = con_out
+    con = console.HBNBCommand()
 
     def setUp(self):
         '''clear models.storage for each test'''
@@ -185,5 +188,46 @@ class TestColsole(unittest.TestCase):
         self.con.do_all(None)
         self.assertEqual(out4.getvalue(), '[]\n')
 
+    def test_help(self):
+        '''Confirm help menu works'''
+        self.con.onecmd('help')
+        self.assertGreater(len(self.con_out.getvalue()), 0)
+        self.assertIn('quit', self.con_out.getvalue())
+        self.assertIn('EOF', self.con_out.getvalue())
+        self.assertIn('create', self.con_out.getvalue())
+        self.assertIn('show', self.con_out.getvalue())
+        self.assertIn('destroy', self.con_out.getvalue())
+        self.assertIn('all', self.con_out.getvalue())
+        self.assertIn('update', self.con_out.getvalue())
 
-# update & default nice!
+    def test_update_args(self):
+        '''Confirm update is working with args'''
+        self.con.do_create('Amenity')
+        out2 = StringIO()
+        sys.stdout = out2
+        self.con.do_all('Amenity')
+        self.con.onecmd(
+            'Amenity.update("{}", "name", "Update")'
+            .format(self.out.getvalue()[:-1])
+        )
+        out3 = StringIO()
+        sys.stdout = out3
+        self.con.do_all('Amenity')
+        self.assertNotEqual(out2.getvalue(), out3.getvalue())
+
+    def test_update_kargs(self):
+        '''Confirm update is working with kwargs'''
+        self.con.do_create('Amenity')
+        out2 = StringIO()
+        sys.stdout = out2
+        self.con.do_all('Amenity')
+        self.con.onecmd(
+            'Amenity.update("' + self.out.getvalue()[:-1]
+            + '", {"name": "Update2"})'
+        )
+        out3 = StringIO()
+        sys.stdout = out3
+        self.con.do_all('Amenity')
+        self.assertNotEqual(out2.getvalue(), out3.getvalue())
+
+# update & default nice! help apparently too

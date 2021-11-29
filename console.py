@@ -4,6 +4,7 @@ import cmd
 import models
 import re
 import json
+from datetime import datetime
 
 
 class HBNBCommand(cmd.Cmd):
@@ -11,13 +12,13 @@ class HBNBCommand(cmd.Cmd):
 
     prompt = '(hbnb) '
 
-    def do_quit(self, args):
+    def do_quit(self, *args):
         '''quit:
         Exits the application
         '''
         raise SystemExit
 
-    def do_EOF(self, args):
+    def do_EOF(self, *args):
         '''EOF:
         Exits application on End of File
         '''
@@ -132,11 +133,14 @@ class HBNBCommand(cmd.Cmd):
         # seems like it should always update the updated_at time
         if args and not kwargs:
             try:
-                setattr(
-                    models.storage.all()[argz[0] + '.' + argz[1]],
-                    argz[2],
-                    argz[3].strip('\'"')
-                )
+                setattr(models.storage.all()[argz[0] + '.' + argz[1]],
+                        argz[2],
+                        argz[3].strip('\'"')
+                        )
+                setattr(models.storage.all()[argz[0] + '.' + argz[1]],
+                        'updated_at',
+                        datetime.now()
+                        )
                 models.storage.save()
             except Exception:
                 print('** no instance found **')
@@ -147,6 +151,11 @@ class HBNBCommand(cmd.Cmd):
                         models.storage.all()[argz[0] + '.' + argz[1]],
                         key,
                         kwargs[key]
+                    )
+                    setattr(
+                        models.storage.all()[argz[0] + '.' + argz[1]],
+                        'updated_at',
+                        datetime.now()
                     )
                 except Exception:
                     print('** no instance found **')
