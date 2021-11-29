@@ -66,18 +66,32 @@ class TestColsole(unittest.TestCase):
         '''Confirm creation of Amenity class
         tests init/all/show/destroy methods
         '''
-        self.con.do_create('Amenity')
+        # self.con.do_create('Amenity')
+        # out2 = StringIO()
+        # sys.stdout = out2
+        # self.con.do_all('Amenity')
+        # out3 = StringIO()
+        # sys.stdout = out3
+        # self.con.do_show('Amenity ' + self.out.getvalue()[:-1])
+        # self.assertEqual(out2.getvalue()[2:-3], out3.getvalue()[:-1])
+        # out4 = StringIO()
+        # sys.stdout = out4
+        # self.con.do_destroy('Amenity ' + self.out.getvalue()[:-1])
+        # self.con.do_all(None)
+        # self.assertEqual(out4.getvalue(), '[]\n')
+
+        self.con.onecmd('create Amenity')
         out2 = StringIO()
         sys.stdout = out2
-        self.con.do_all('Amenity')
+        self.con.onecmd('all Amenity')
         out3 = StringIO()
         sys.stdout = out3
-        self.con.do_show('Amenity ' + self.out.getvalue()[:-1])
+        self.con.onecmd('show Amenity ' + self.out.getvalue()[:-1])
         self.assertEqual(out2.getvalue()[2:-3], out3.getvalue()[:-1])
         out4 = StringIO()
         sys.stdout = out4
-        self.con.do_destroy('Amenity ' + self.out.getvalue()[:-1])
-        self.con.do_all(None)
+        self.con.onecmd('destroy Amenity ' + self.out.getvalue()[:-1])
+        self.con.onecmd('Amenity.all()')
         self.assertEqual(out4.getvalue(), '[]\n')
 
     def test_BaseModel_adis(self):
