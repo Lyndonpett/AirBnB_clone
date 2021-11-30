@@ -53,7 +53,9 @@ class TestColsole(unittest.TestCase):
         '''Confirm console ends as expected'''
         with self.assertRaises(SystemExit):
             self.con.do_quit()
+            self.con.onecmd('quit')
             self.con.do_EOF()
+            self.con.onecmd('EOF')
 
     def test_emptyline(self):
         '''Confirm emptyline does nothing'''
