@@ -130,7 +130,7 @@ class TestColsole(unittest.TestCase):
             'BaseModel.update("' + self.out.getvalue()[:-1]
             + '", {"name": "Update2"})'
         )
-        self.con.onecmd('all')
+        self.con.onecmd('BaseModel.all()')
         self.assertNotEqual(out6.getvalue(), out7.getvalue())
         out8 = StringIO()
         sys.stdout = out8
