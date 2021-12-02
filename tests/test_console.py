@@ -52,20 +52,22 @@ class TestColsole(unittest.TestCase):
     def test_Console_Exit(self):
         '''Confirm console ends as expected'''
         with self.assertRaises(SystemExit):
-            self.con.onecmd("quit")
             self.con.do_quit(None)
-            self.con.onecmd("EOF")
+        with self.assertRaises(SystemExit):
+            self.con.onecmd('quit')
+        with self.assertRaises(SystemExit):
             self.con.do_EOF(None)
+        with self.assertRaises(SystemExit):
+            self.con.onecmd('EOF')
 
     def test_emptyline(self):
         '''Confirm emptyline does nothing'''
         self.con.emptyline()
-        self.con.onecmd('')
         self.assertEqual(self.out.getvalue(), '')
         self.con.do_all(None)
         self.assertEqual(self.out.getvalue(), '[]\n')
 
-    def test_Amenity_ais(self):
+    def test_Amenity(self):
         '''Confirm creation of Amenity class
         tests init/all/show/destroy methods
         '''
@@ -93,11 +95,14 @@ class TestColsole(unittest.TestCase):
         self.assertEqual(out2.getvalue()[2:-3], out3.getvalue()[:-1])
         out4 = StringIO()
         sys.stdout = out4
+
+        out5 = StringIO()
+        sys.stdout = out5
         self.con.onecmd('destroy Amenity ' + self.out.getvalue()[:-1])
         self.con.onecmd('Amenity.all()')
-        self.assertEqual(out4.getvalue(), '[]\n')
+        self.assertEqual(out5.getvalue(), '[]\n')
 
-    def test_BaseModel_adis(self):
+    def test_BaseModel(self):
         '''Confirm creation of BaseModel class
         tests init/all/show/destroy methods
         '''
@@ -111,11 +116,35 @@ class TestColsole(unittest.TestCase):
         self.assertEqual(out2.getvalue()[2:-3], out3.getvalue()[:-1])
         out4 = StringIO()
         sys.stdout = out4
-        self.con.do_destroy('BaseModel ' + self.out.getvalue()[:-1])
+        self.con.onecmd('BaseModel.show("' + self.out.getvalue()[:-1] + '")')
+        self.assertEqual(out3.getvalue(), out4.getvalue())
+        out5 = StringIO()
+        sys.stdout = out5
+        self.con.default("BaseModel.count()")
+        self.assertEqual(out5.getvalue(), '1\n')
+        out6 = StringIO()
+        sys.stdout = out6
+        self.con.onecmd(
+            'BaseModel.update("' + self.out.getvalue()[:-1]
+            + '", "name", "Update")'
+        )
         self.con.do_all(None)
-        self.assertEqual(out4.getvalue(), '[]\n')
+        out7 = StringIO()
+        sys.stdout = out7
+        self.con.onecmd(
+            'BaseModel.update("' + self.out.getvalue()[:-1]
+            + '", {"name": "Update2"})'
+        )
+        self.con.onecmd('BaseModel.all()')
+        self.assertNotEqual(out6.getvalue(), out7.getvalue())
+        out8 = StringIO()
+        sys.stdout = out8
+        self.con.onecmd(
+            'BaseModel.destroy("' + self.out.getvalue()[:-1] + '")')
+        self.con.do_all(None)
+        self.assertEqual(out8.getvalue(), '[]\n')
 
-    def test_City_ais(self):
+    def test_City(self):
         '''Confirm creation of City class
         tests init/all/show/destroy methods
         '''
@@ -133,7 +162,7 @@ class TestColsole(unittest.TestCase):
         self.con.do_all(None)
         self.assertEqual(out4.getvalue(), '[]\n')
 
-    def test_Place_ais(self):
+    def test_Place(self):
         '''Confirm creation of Place class
         tests init/all/show/destroy methods
         '''
@@ -151,7 +180,7 @@ class TestColsole(unittest.TestCase):
         self.con.do_all(None)
         self.assertEqual(out4.getvalue(), '[]\n')
 
-    def test_Review_ais(self):
+    def test_Review(self):
         '''Confirm creation of Review class
         tests init/all/show/destroy methods
         '''
@@ -169,7 +198,7 @@ class TestColsole(unittest.TestCase):
         self.con.do_all(None)
         self.assertEqual(out4.getvalue(), '[]\n')
 
-    def test_State_ais(self):
+    def test_State(self):
         '''Confirm creation of State class
         tests init/all/show/destroy methods
         '''
@@ -187,7 +216,7 @@ class TestColsole(unittest.TestCase):
         self.con.do_all(None)
         self.assertEqual(out4.getvalue(), '[]\n')
 
-    def test_User_ais(self):
+    def test_User(self):
         '''Confirm creation of User class
         tests init/all/show/destroy methods
         '''
